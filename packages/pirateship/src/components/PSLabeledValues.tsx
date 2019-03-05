@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {FunctionComponent, memo} from 'react';
 import {
   StyleProp,
   StyleSheet,
@@ -23,34 +23,22 @@ export interface KeyValuePair {
 }
 
 export interface PSLabeledValuesProps {
+  /* The array of key value objects */
   items: KeyValuePair | KeyValuePair[];
+  /* view styles for list container */
   containerStyle?: StyleProp<ViewStyle>;
+  /* topline text style for all text in container */
   containerTextStyle?: StyleProp<ViewStyle>;
+  /* text styles for labels */
   labelStyle?: StyleProp<TextStyle>;
+  /* text styles for values */
   valueStyle?: StyleProp<TextStyle>;
 }
 
-export default class PSLabeledValues extends Component<PSLabeledValuesProps> {
-  render(): JSX.Element {
-    const { items, containerStyle } = this.props;
-
-    let body = null;
-    if (Array.isArray(items)) {
-      body = items.map(this.renderLine);
-    } else {
-      body = this.renderLine(items, 0);
-    }
-
-    return (
-      <View style={[styles.container, containerStyle]}>
-        {body}
-      </View>
-    );
-  }
-
-  renderLine = (item: KeyValuePair, index: number) => {
+const PSLabeledValues: FunctionComponent<PSLabeledValuesProps> = props => {
+  const { items, containerStyle, labelStyle, valueStyle, containerTextStyle } = props;
+  const renderLine = (item: KeyValuePair, index: number): JSX.Element => {
     const { label, value } = item;
-    const { labelStyle, valueStyle, containerTextStyle } = this.props;
 
     return (
       <Text
@@ -65,5 +53,21 @@ export default class PSLabeledValues extends Component<PSLabeledValuesProps> {
         </Text>
       </Text>
     );
+  };
+
+  let body = null;
+
+  if (Array.isArray(items)) {
+    body = items.map(renderLine);
+  } else {
+    body = renderLine(items, 0);
   }
-}
+
+  return (
+    <View style={[styles.container, containerStyle]}>
+      {body}
+    </View>
+  );
+};
+
+export default memo(PSLabeledValues);

@@ -30,6 +30,7 @@ import BreadCrumbsSample from './screens/BreadCrumbsSample';
 import AccordionSample from './screens/AccordionSample';
 import ActionBarSample from './screens/ActionBarSample';
 import ImageWithOverlaySample from './screens/ImageWithOverlaySample';
+import PSLabeledValuesSample from './screens/PSLabeledValuesSample';
 
 export default {
   Shop,
@@ -60,5 +61,6 @@ export default {
   BreadCrumbsSample,
   AccordionSample,
   ActionBarSample,
-  ImageWithOverlaySample
+  ImageWithOverlaySample,
+  PSLabeledValuesSample
 };
